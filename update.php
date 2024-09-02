@@ -26,7 +26,9 @@ include('connection.php');
 if(isset($_GET['id'])){
     $id = $_GET['id'];
     $query = $pdo->prepare("select * from marksheet where id=:pid");
-    $query->bindParam("pid",$)
+    $query->bindParam("pid",$id);
+    $query->execute();
+    $data = $query->fetch(PDO::FETCH_ASSOC);
 }
 ?>
 <body>
@@ -39,6 +41,7 @@ if(isset($_GET['id'])){
                     name="name"
                     id=""
                     class="form-control"
+                    value = "<?php echo $data['name'];?>"
                     placeholder="enter your name"
                 />
                 <div class="mb-3">
@@ -49,6 +52,7 @@ if(isset($_GET['id'])){
                     name="maths"
                     id=""
                     class="form-control"
+                    value = "<?php echo $data['math'];?>"
                     placeholder="enter your marks"
                 />
                 </div>
@@ -59,6 +63,7 @@ if(isset($_GET['id'])){
                     name="physics"
                     id=""
                     class="form-control"
+                    value = "<?php echo $data['physics'];?>"
                     placeholder="enter your marks"
                 />
                 </div>
@@ -69,6 +74,7 @@ if(isset($_GET['id'])){
                     name="chemistry"
                     id=""
                     class="form-control"
+                    value = "<?php echo $data['chemistry'];?>"
                     placeholder="enter yiour marks"
                 />
                 </div>
@@ -79,6 +85,7 @@ if(isset($_GET['id'])){
                     name="english"
                     id=""
                     class="form-control"
+                    value = "<?php echo $data['english'];?>"
                     placeholder="enter your name"
                 />
                 </div>
@@ -89,6 +96,7 @@ if(isset($_GET['id'])){
                     name="urdu"
                     id=""
                     class="form-control"
+                    value = "<?php echo $data['urdu'];?>"
                     placeholder="enter your marks"
                 />
                 </div>
