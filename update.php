@@ -23,6 +23,7 @@ include('connection.php');
         
     </head>
 <?php  
+
 if(isset($_GET['id'])){
     $id = $_GET['id'];
     $query = $pdo->prepare("select * from marksheet where id=:pid");
@@ -34,6 +35,7 @@ if(isset($_GET['id'])){
 <body>
 <div class="container mt-5">
         <form action="" method="post">
+            <input type="hidden" name="id" value="<?php echo $data['id'] ?>">
             <div class="mb-3">
                 <label for="" class="form-label">name</label>
                 <input 
@@ -49,7 +51,7 @@ if(isset($_GET['id'])){
             <label for="" class="form-label">math</label>
                 <input 
                     type="number"
-                    name="maths"
+                    name="math"
                     id=""
                     class="form-control"
                     value = "<?php echo $data['math'];?>"
@@ -105,7 +107,7 @@ if(isset($_GET['id'])){
             <button 
         type="submit"
         class="btn btn-success"
-        name="result"
+        name="update"
         
     >
    submit
@@ -115,16 +117,17 @@ if(isset($_GET['id'])){
     </body>
 </html>
 <?php
-if(isset($_POST['result'])){
+if(isset($_POST['update'])){
+    $id=$_POST['id'];
     $name=$_POST['name'];
-    $maths=$_POST['maths'];
+    $math=$_POST['math'];
     $physics=$_POST['physics'];
     $chemistry=$_POST['chemistry'];
     $english=$_POST['english'];
     $urdu=$_POST['urdu'];
     $totalmarks=500;
-    $obtain=$maths + $physics + $chemistry + $english+$urdu;
-    $percentage=$obtain/$totalmarks*100;
+    $obtain= $math + $physics + $chemistry + $english+ $urdu;
+    $percentage= $obtain/$totalmarks*100;
     $grad="";
     $remarks="";
     if($percentage>=80 && $percentage<=100){
@@ -148,23 +151,23 @@ if(isset($_POST['result'])){
         $remarks="batter luck next time";
     }
 
-   $query = $pdo->prepare("insert into marksheet (name,math,physics,chemistry,english,urdu,obtain,percentage,grade,remarks)values
-   (:pn,:pm,:pp,:pc,:pe,:pu,:po,:pper,:pg,:pr)");
-
-
+   $query = $pdo->prepare("update marksheet set name=:pn ,math=:pm, physics=:pp,chemistry=:pc,english=:pe,urdu=:pu,obtain=:po,percentage=:pper,grade=:pg,remarks=:pr where id = :pid");
+   $query->bindParam("pid",$id);
    $query->bindParam("pn",$name);
-   $query->bindParam("pm",$maths);
+   $query->bindParam("pm",$math);
    $query->bindParam("pp",$physics);
    $query->bindParam("pc",$chemistry);
    $query->bindParam("pe",$english);
    $query->bindParam("pu",$urdu);
    $query->bindParam("po",$obtain);
    $query->bindParam("pper",$percentage);
-   $query->bindParam("pg",$grad);
+   $query->bindParam("pg",$grade);
    $query->bindParam("pr",$remarks);
    $query->execute();
    echo "<script>
-   alert('data insert into table'
+
+   alert('data insert into table');
+   location.assign('veiw.php')
    </script>";
 
     ?>

@@ -150,7 +150,7 @@ if(isset($_POST['result'])){
    $query->bindParam("pr",$remarks);
    $query->execute();
    echo "<script>
-   alert('data insert into table'
+   alert('data insert into table')
    </script>";
 
     ?>

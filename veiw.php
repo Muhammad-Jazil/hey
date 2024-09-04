@@ -55,11 +55,25 @@ foreach($row as $value)
                         <td><?php echo $value['grade'];?></td>
                         <td><?php echo $value['remarks'];?></td>
 <td><a href="update.php?id=<?php echo $value['id']?>"class ="btn-success">Edit</a></td>
-<td><a href=""class ="btn-danger">Delete</a></td>
+<td><a href="?delete=<?php echo  $value ['id']?>"class ="btn btn-danger">Delete</a></td>
 
 
                     </tr>
                  <?php
+}
+if(isset($_GET['delete'])){
+    $id = $_GET['delete'];
+    $query = $pdo->prepare("delete from marksheet where id = :pid");
+    $query->bindParam("pid",$id);
+    $query->execute();
+    echo "<script>
+
+    alert('data delete successfully');
+    location.assign('veiw.php')
+    </script>";
+ 
+
+
 }
                  ?>   
                 <tbody>
